@@ -57,15 +57,17 @@ class ViewController: UIViewController, SparkSetupMainControllerDelegate {
         let loginGroup : dispatch_group_t = dispatch_group_create()
         let deviceGroup : dispatch_group_t = dispatch_group_create()
         let priority = DISPATCH_QUEUE_PRIORITY_DEFAULT
-        let deviceName = "turtle_gerbil" // change to your particular device name
         let functionName = "testFunc"
         let variableName = "testVar"
         var myPhoton : SparkDevice? = nil
         var myEventId : AnyObject?
+
         
-        
-        let username = "ido@spark.io"  // change
-        let password = "test123"           // change
+        // CHANGE THESE CONSANTS TO WHAT YOU NEED:
+        let deviceName = "turtle_gerbil"
+        let username = "testuser@particle.io"
+        let password = "testpass"
+
         
         dispatch_async(dispatch_get_global_queue(priority, 0)) {
             // logging in
@@ -209,14 +211,6 @@ class ViewController: UIViewController, SparkSetupMainControllerDelegate {
             print("logged out")
         }
         
- 
-        
-        
-        
     }
-    
-    
-
-
 }
 
