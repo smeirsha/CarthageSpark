@@ -1,1 +1,2 @@
-github "spark/spark-setup-ios" ~> 0.4.0
+github "spark/spark-sdk-ios" ~> 0.5.0
+github "spark/spark-setup-ios" ~> 0.6.0

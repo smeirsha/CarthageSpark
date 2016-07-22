@@ -10,7 +10,7 @@ import UIKit
 import ParticleDeviceSetupLibrary
 import ParticleSDK
 
-class ViewController: UIViewController, SparkSetupMainControllerDelegate {
+class ViewController: UIViewController, SparkSetupMainControllerDelegate, SparkDeviceDelegate {
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -19,6 +19,8 @@ class ViewController: UIViewController, SparkSetupMainControllerDelegate {
         
     }
 
+    
+    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
@@ -50,6 +52,10 @@ class ViewController: UIViewController, SparkSetupMainControllerDelegate {
     
     @IBAction func invokeCloudSDK(sender: AnyObject) {
         self.testCloudSDK()
+    }
+    
+    func sparkDevice(device: SparkDevice, didReceiveSystemEvent event: SparkDeviceSystemEvent) {
+        print("Device "+device.name!+" received system event id "+String(event.rawValue))
     }
     
     func testCloudSDK()
