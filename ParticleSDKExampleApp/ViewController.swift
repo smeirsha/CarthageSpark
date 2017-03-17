@@ -26,13 +26,13 @@ class ViewController: UIViewController, SparkSetupMainControllerDelegate, SparkD
         // Dispose of any resources that can be recreated.
     }
 
-    func sparkSetupViewController(controller: SparkSetupMainController!, didFinishWithResult result: SparkSetupMainControllerResult, device: SparkDevice!) {
+    func sparkSetupViewController(_ controller: SparkSetupMainController!, didFinishWith result: SparkSetupMainControllerResult, device: SparkDevice!) {
         
         print("result: \(result), and device: \(device)")
         
     }
     
-    @IBAction func invokeSetup(sender: AnyObject) {
+    @IBAction func invokeSetup(_ sender: AnyObject) {
         print("Particle Device setup lib V:\(ParticleDeviceSetupLibraryVersionNumber)\nParticle SDK V:\(ParticleSDKVersionNumber)")
         
         // lines required for invoking the Spark Setup wizard
@@ -41,32 +41,32 @@ class ViewController: UIViewController, SparkSetupMainControllerDelegate, SparkD
             
             // check organization setup mode
             let c = SparkSetupCustomization.sharedInstance()
-            c.allowSkipAuthentication = true
+            c?.allowSkipAuthentication = true
             
             vc.delegate = self
-            vc.modalPresentationStyle = .FormSheet  // use that for iPad
-            self.presentViewController(vc, animated: true, completion: nil)
+            vc.modalPresentationStyle = .formSheet  // use that for iPad
+            self.present(vc, animated: true, completion: nil)
         }
 
     }
     
-    @IBAction func invokeCloudSDK(sender: AnyObject) {
+    @IBAction func invokeCloudSDK(_ sender: AnyObject) {
         self.testCloudSDK()
     }
     
-    func sparkDevice(device: SparkDevice, didReceiveSystemEvent event: SparkDeviceSystemEvent) {
+    func sparkDevice(_ device: SparkDevice, didReceive event: SparkDeviceSystemEvent) {
         print("Device "+device.name!+" received system event id "+String(event.rawValue))
     }
     
     func testCloudSDK()
     {
-        let loginGroup : dispatch_group_t = dispatch_group_create()
-        let deviceGroup : dispatch_group_t = dispatch_group_create()
-        let priority = DISPATCH_QUEUE_PRIORITY_DEFAULT
+        let loginGroup : DispatchGroup = DispatchGroup()
+        let deviceGroup : DispatchGroup = DispatchGroup()
+        let priority = DispatchQueue.GlobalQueuePriority.default
         let functionName = "testFunc"
         let variableName = "testVar"
         var myPhoton : SparkDevice? = nil
-        var myEventId : AnyObject?
+        var myEventId : Any?
 
         
         // CHANGE THESE CONSANTS TO WHAT YOU NEED:
@@ -75,40 +75,40 @@ class ViewController: UIViewController, SparkSetupMainControllerDelegate, SparkD
         let password = "testpass"
 
         
-        dispatch_async(dispatch_get_global_queue(priority, 0)) {
+        DispatchQueue.global(priority: priority).async {
             // logging in
-            dispatch_group_enter(loginGroup);
-            dispatch_group_enter(deviceGroup);
+            loginGroup.enter();
+            deviceGroup.enter();
             if SparkCloud.sharedInstance().isAuthenticated {
                 print("logging out of old session")
                 SparkCloud.sharedInstance().logout()
             }
             
-            SparkCloud.sharedInstance().loginWithUser(username, password: password, completion: { (error : NSError?) in  // or possibly: .injectSessionAccessToken("ec05695c1b224a262f1a1e92d5fc2de912c467a1")
+            SparkCloud.sharedInstance().login(withUser: username, password: password, completion: { (error : Error?) in  // or possibly: .injectSessionAccessToken("ec05695c1b224a262f1a1e92d5fc2de912c467a1")
                 if let _ = error {
                     print("Wrong credentials or no internet connectivity, please try again")
                 }
                 else
                 {
                     print("Logged in with user "+username) // or with injected token
-                    dispatch_group_leave(loginGroup)
+                    loginGroup.leave()
                 }
             })
         }
         
-        dispatch_async(dispatch_get_global_queue(priority, 0)) {
+        DispatchQueue.global(priority: priority).async {
             // logging in
-            dispatch_group_wait(loginGroup, DISPATCH_TIME_FOREVER)
+            loginGroup.wait(timeout: DispatchTime.distantFuture)
             
             // get specific device by name:
-            SparkCloud.sharedInstance().getDevices { (sparkDevices:[AnyObject]?, error:NSError?) -> Void in
+            SparkCloud.sharedInstance().getDevices { (sparkDevices:[SparkDevice]?, error:Error?) -> Void in
                 if let _=error
                 {
                     print("Check your internet connectivity")
                 }
                 else
                 {
-                    if let devices = sparkDevices as? [SparkDevice]
+                    if let devices = sparkDevices
                     {
                         for device in devices
                         {
@@ -116,7 +116,7 @@ class ViewController: UIViewController, SparkSetupMainControllerDelegate, SparkD
                             {
                                 print("found a device with name "+deviceName+" in your account")
                                 myPhoton = device
-                                dispatch_group_leave(deviceGroup)
+                                deviceGroup.leave()
                             }
                             
                         }
@@ -130,18 +130,18 @@ class ViewController: UIViewController, SparkSetupMainControllerDelegate, SparkD
         }
         
         
-        dispatch_async(dispatch_get_global_queue(priority, 0)) {
+        DispatchQueue.global(priority: priority).async {
             // logging in
-            dispatch_group_wait(deviceGroup, DISPATCH_TIME_FOREVER)
-            dispatch_group_enter(deviceGroup);
+            deviceGroup.wait(timeout: DispatchTime.distantFuture)
+            deviceGroup.enter();
             
             print("subscribing to event...");
             var gotFirstEvent : Bool = false
-            myEventId = myPhoton!.subscribeToEventsWithPrefix("test", handler: { (event: SparkEvent?, error:NSError?) -> Void in
+            myEventId = myPhoton!.subscribeToEvents(withPrefix: "test", handler: { (event: SparkEvent?, error:Error?) -> Void in
                 if (!gotFirstEvent) {
                     print("Got first event: "+event!.event)
                     gotFirstEvent = true
-                    dispatch_group_leave(deviceGroup)
+                    deviceGroup.leave()
                 } else {
                     print("Got event: "+event!.event)
                 }
@@ -150,16 +150,16 @@ class ViewController: UIViewController, SparkSetupMainControllerDelegate, SparkD
         
         
         // calling a function
-        dispatch_async(dispatch_get_global_queue(priority, 0)) {
+        DispatchQueue.global(priority: priority).async {
             // logging in
-            dispatch_group_wait(deviceGroup, DISPATCH_TIME_FOREVER) // 5
-            dispatch_group_enter(deviceGroup);
+            deviceGroup.wait(timeout: DispatchTime.distantFuture) // 5
+            deviceGroup.enter();
             
-            let funcArgs = ["D7",1]
-            myPhoton!.callFunction(functionName, withArguments: funcArgs) { (resultCode : NSNumber?, error : NSError?) -> Void in
+            let funcArgs = ["D7",1] as [Any]
+            myPhoton!.callFunction(functionName, withArguments: funcArgs) { (resultCode : NSNumber?, error : Error?) -> Void in
                 if (error == nil) {
                     print("Successfully called function "+functionName+" on device "+deviceName)
-                    dispatch_group_leave(deviceGroup)
+                    deviceGroup.leave()
                 } else {
                     print("Failed to call function "+functionName+" on device "+deviceName)
                 }
@@ -168,12 +168,12 @@ class ViewController: UIViewController, SparkSetupMainControllerDelegate, SparkD
         
         
         // reading a variable
-        dispatch_async(dispatch_get_global_queue(priority, 0)) {
+        DispatchQueue.global(priority: priority).async {
             // logging in
-            dispatch_group_wait(deviceGroup, DISPATCH_TIME_FOREVER) // 5
-            dispatch_group_enter(deviceGroup);
+            deviceGroup.wait(timeout: DispatchTime.distantFuture) // 5
+            deviceGroup.enter();
             
-            myPhoton!.getVariable(variableName, completion: { (result:AnyObject?, error:NSError?) -> Void in
+            myPhoton!.getVariable(variableName, completion: { (result:Any?, error:Error?) -> Void in
                 if let _=error
                 {
                     print("Failed reading variable "+variableName+" from device")
@@ -183,7 +183,7 @@ class ViewController: UIViewController, SparkSetupMainControllerDelegate, SparkD
                     if let res = result as? Int
                     {
                         print("Variable "+variableName+" value is \(res)")
-                        dispatch_group_leave(deviceGroup)
+                        deviceGroup.leave()
                     }
                 }
             })
@@ -191,26 +191,26 @@ class ViewController: UIViewController, SparkSetupMainControllerDelegate, SparkD
         
         
         // get device variables and functions
-        dispatch_async(dispatch_get_global_queue(priority, 0)) {
+        DispatchQueue.global(priority: priority).async {
             // logging in
-            dispatch_group_wait(deviceGroup, DISPATCH_TIME_FOREVER) // 5
-            dispatch_group_enter(deviceGroup);
+            deviceGroup.wait(timeout: DispatchTime.distantFuture) // 5
+            deviceGroup.enter();
             
             let myDeviceVariables : Dictionary? = myPhoton!.variables as Dictionary<String,String>
             print("MyDevice first Variable is called \(myDeviceVariables!.keys.first) and is from type \(myDeviceVariables?.values.first)")
             
             let myDeviceFunction = myPhoton!.functions
             print("MyDevice first function is called \(myDeviceFunction.first)")
-            dispatch_group_leave(deviceGroup)
+            deviceGroup.leave()
         }
         
         // logout
-        dispatch_async(dispatch_get_global_queue(priority, 0)) {
+        DispatchQueue.global(priority: priority).async {
             // logging in
-            dispatch_group_wait(deviceGroup, DISPATCH_TIME_FOREVER) // 5
+            deviceGroup.wait(timeout: DispatchTime.distantFuture) // 5
             
             if let eId = myEventId {
-                myPhoton!.unsubscribeFromEventWithID(eId)
+                myPhoton!.unsubscribeFromEvent(withID: eId)
             }
             SparkCloud.sharedInstance().logout()
             
