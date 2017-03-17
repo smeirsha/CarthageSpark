@@ -62,7 +62,6 @@ class ViewController: UIViewController, SparkSetupMainControllerDelegate, SparkD
     {
         let loginGroup : DispatchGroup = DispatchGroup()
         let deviceGroup : DispatchGroup = DispatchGroup()
-        let priority = DispatchQueue.GlobalQueuePriority.default
         let functionName = "testFunc"
         let variableName = "testVar"
         var myPhoton : SparkDevice? = nil
@@ -70,12 +69,12 @@ class ViewController: UIViewController, SparkSetupMainControllerDelegate, SparkD
 
         
         // CHANGE THESE CONSANTS TO WHAT YOU NEED:
-        let deviceName = "turtle_gerbil"
+        let deviceName = "hobbit_wombat"
         let username = "testuser@particle.io"
         let password = "testpass"
 
         
-        DispatchQueue.global(priority: priority).async {
+        DispatchQueue(label: "example1", qos: DispatchQoS.default).async {
             // logging in
             loginGroup.enter();
             deviceGroup.enter();
@@ -96,9 +95,9 @@ class ViewController: UIViewController, SparkSetupMainControllerDelegate, SparkD
             })
         }
         
-        DispatchQueue.global(priority: priority).async {
+        DispatchQueue(label: "example1", qos: DispatchQoS.default).async {
             // logging in
-            loginGroup.wait(timeout: DispatchTime.distantFuture)
+            _ = loginGroup.wait(timeout: DispatchTime.distantFuture)
             
             // get specific device by name:
             SparkCloud.sharedInstance().getDevices { (sparkDevices:[SparkDevice]?, error:Error?) -> Void in
@@ -130,14 +129,14 @@ class ViewController: UIViewController, SparkSetupMainControllerDelegate, SparkD
         }
         
         
-        DispatchQueue.global(priority: priority).async {
+        DispatchQueue(label: "example1", qos: DispatchQoS.default).async {
             // logging in
-            deviceGroup.wait(timeout: DispatchTime.distantFuture)
+            _ = deviceGroup.wait(timeout: DispatchTime.distantFuture)
             deviceGroup.enter();
             
             print("subscribing to event...");
             var gotFirstEvent : Bool = false
-            myEventId = myPhoton!.subscribeToEvents(withPrefix: "test", handler: { (event: SparkEvent?, error:Error?) -> Void in
+            myEventId = myPhoton!.subscribeToEvents(withPrefix: "some-test", handler: { (event: SparkEvent?, error:Error?) -> Void in
                 if (!gotFirstEvent) {
                     print("Got first event: "+event!.event)
                     gotFirstEvent = true
@@ -150,9 +149,9 @@ class ViewController: UIViewController, SparkSetupMainControllerDelegate, SparkD
         
         
         // calling a function
-        DispatchQueue.global(priority: priority).async {
+        DispatchQueue(label: "example1", qos: DispatchQoS.default).async {
             // logging in
-            deviceGroup.wait(timeout: DispatchTime.distantFuture) // 5
+            _ = deviceGroup.wait(timeout: DispatchTime.distantFuture) // 5
             deviceGroup.enter();
             
             let funcArgs = ["D7",1] as [Any]
@@ -168,9 +167,9 @@ class ViewController: UIViewController, SparkSetupMainControllerDelegate, SparkD
         
         
         // reading a variable
-        DispatchQueue.global(priority: priority).async {
+        DispatchQueue(label: "example1", qos: DispatchQoS.default).async {
             // logging in
-            deviceGroup.wait(timeout: DispatchTime.distantFuture) // 5
+            _ = deviceGroup.wait(timeout: DispatchTime.distantFuture) // 5
             deviceGroup.enter();
             
             myPhoton!.getVariable(variableName, completion: { (result:Any?, error:Error?) -> Void in
@@ -191,9 +190,9 @@ class ViewController: UIViewController, SparkSetupMainControllerDelegate, SparkD
         
         
         // get device variables and functions
-        DispatchQueue.global(priority: priority).async {
+        DispatchQueue(label: "example1", qos: DispatchQoS.default).async {
             // logging in
-            deviceGroup.wait(timeout: DispatchTime.distantFuture) // 5
+            _ = deviceGroup.wait(timeout: DispatchTime.distantFuture) // 5
             deviceGroup.enter();
             
             let myDeviceVariables : Dictionary? = myPhoton!.variables as Dictionary<String,String>
@@ -205,9 +204,9 @@ class ViewController: UIViewController, SparkSetupMainControllerDelegate, SparkD
         }
         
         // logout
-        DispatchQueue.global(priority: priority).async {
+        DispatchQueue(label: "example1", qos: DispatchQoS.default).async {
             // logging in
-            deviceGroup.wait(timeout: DispatchTime.distantFuture) // 5
+            _ = deviceGroup.wait(timeout: DispatchTime.distantFuture) // 5
             
             if let eId = myEventId {
                 myPhoton!.unsubscribeFromEvent(withID: eId)
