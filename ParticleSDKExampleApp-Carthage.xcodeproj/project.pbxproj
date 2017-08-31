@@ -7,6 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		500638F11F57A6DD00D09FB2 /* AFNetworking.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 500638ED1F57A6DD00D09FB2 /* AFNetworking.framework */; };
+		500638F21F57A6DD00D09FB2 /* OnePasswordExtension.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 500638EE1F57A6DD00D09FB2 /* OnePasswordExtension.framework */; };
+		500638F31F57A6DD00D09FB2 /* ParticleDeviceSetupLibrary.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 500638EF1F57A6DD00D09FB2 /* ParticleDeviceSetupLibrary.framework */; };
+		500638F41F57A6DD00D09FB2 /* ParticleSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 500638F01F57A6DD00D09FB2 /* ParticleSDK.framework */; };
 		509749CD1D42E46900C5DF0B /* AFNetworking.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 509749C81D42E3CA00C5DF0B /* AFNetworking.framework */; };
 		509749CE1D42E46900C5DF0B /* OnePasswordExtension.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 509749C71D42E3CA00C5DF0B /* OnePasswordExtension.framework */; };
 		509749D11D42E4A200C5DF0B /* ParticleDeviceSetupLibrary.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 509749C51D42E3CA00C5DF0B /* ParticleDeviceSetupLibrary.framework */; };
@@ -21,10 +25,6 @@
 		50A6F8751CAE06DD000024A8 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 50A6F8741CAE06DD000024A8 /* Assets.xcassets */; };
 		50A6F8781CAE06DD000024A8 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 50A6F8761CAE06DD000024A8 /* LaunchScreen.storyboard */; };
 		50A6F89B1CB4A646000024A8 /* Cartfile in Resources */ = {isa = PBXBuildFile; fileRef = 50A6F89A1CB4A646000024A8 /* Cartfile */; };
-		50B043071E7C8BA600F8A7FB /* AFNetworking.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 50B043031E7C8BA600F8A7FB /* AFNetworking.framework */; };
-		50B043081E7C8BA600F8A7FB /* OnePasswordExtension.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 50B043041E7C8BA600F8A7FB /* OnePasswordExtension.framework */; };
-		50B043091E7C8BA600F8A7FB /* ParticleDeviceSetupLibrary.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 50B043051E7C8BA600F8A7FB /* ParticleDeviceSetupLibrary.framework */; };
-		50B0430A1E7C8BA600F8A7FB /* ParticleSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 50B043061E7C8BA600F8A7FB /* ParticleSDK.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -45,6 +45,10 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		500638ED1F57A6DD00D09FB2 /* AFNetworking.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AFNetworking.framework; path = Carthage/Build/iOS/AFNetworking.framework; sourceTree = "<group>"; };
+		500638EE1F57A6DD00D09FB2 /* OnePasswordExtension.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OnePasswordExtension.framework; path = Carthage/Build/iOS/OnePasswordExtension.framework; sourceTree = "<group>"; };
+		500638EF1F57A6DD00D09FB2 /* ParticleDeviceSetupLibrary.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ParticleDeviceSetupLibrary.framework; path = Carthage/Build/iOS/ParticleDeviceSetupLibrary.framework; sourceTree = "<group>"; };
+		500638F01F57A6DD00D09FB2 /* ParticleSDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ParticleSDK.framework; path = Carthage/Build/iOS/ParticleSDK.framework; sourceTree = "<group>"; };
 		5014ED6E1CB8770A00A1063E /* firmware.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = firmware.c; sourceTree = "<group>"; };
 		5014ED761CB8777900A1063E /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		509749C51D42E3CA00C5DF0B /* ParticleDeviceSetupLibrary.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ParticleDeviceSetupLibrary.framework; path = "/Users/ido/projects/Spark/ios-app-example-carthage/Carthage/Build/iOS/ParticleDeviceSetupLibrary.framework"; sourceTree = "<absolute>"; };
@@ -59,10 +63,6 @@
 		50A6F8771CAE06DD000024A8 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		50A6F8791CAE06DE000024A8 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		50A6F89A1CB4A646000024A8 /* Cartfile */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Cartfile; sourceTree = "<group>"; };
-		50B043031E7C8BA600F8A7FB /* AFNetworking.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AFNetworking.framework; path = Carthage/Build/iOS/AFNetworking.framework; sourceTree = "<group>"; };
-		50B043041E7C8BA600F8A7FB /* OnePasswordExtension.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OnePasswordExtension.framework; path = Carthage/Build/iOS/OnePasswordExtension.framework; sourceTree = "<group>"; };
-		50B043051E7C8BA600F8A7FB /* ParticleDeviceSetupLibrary.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ParticleDeviceSetupLibrary.framework; path = Carthage/Build/iOS/ParticleDeviceSetupLibrary.framework; sourceTree = "<group>"; };
-		50B043061E7C8BA600F8A7FB /* ParticleSDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ParticleSDK.framework; path = Carthage/Build/iOS/ParticleSDK.framework; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -70,14 +70,14 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				50B043081E7C8BA600F8A7FB /* OnePasswordExtension.framework in Frameworks */,
-				50B043091E7C8BA600F8A7FB /* ParticleDeviceSetupLibrary.framework in Frameworks */,
+				500638F21F57A6DD00D09FB2 /* OnePasswordExtension.framework in Frameworks */,
+				500638F31F57A6DD00D09FB2 /* ParticleDeviceSetupLibrary.framework in Frameworks */,
 				509749CD1D42E46900C5DF0B /* AFNetworking.framework in Frameworks */,
-				50B043071E7C8BA600F8A7FB /* AFNetworking.framework in Frameworks */,
+				500638F11F57A6DD00D09FB2 /* AFNetworking.framework in Frameworks */,
 				509749CE1D42E46900C5DF0B /* OnePasswordExtension.framework in Frameworks */,
 				509749D11D42E4A200C5DF0B /* ParticleDeviceSetupLibrary.framework in Frameworks */,
 				509749D31D42E4A200C5DF0B /* ParticleSDK.framework in Frameworks */,
-				50B0430A1E7C8BA600F8A7FB /* ParticleSDK.framework in Frameworks */,
+				500638F41F57A6DD00D09FB2 /* ParticleSDK.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -87,10 +87,10 @@
 		50A6F8611CAE06DD000024A8 = {
 			isa = PBXGroup;
 			children = (
-				50B043031E7C8BA600F8A7FB /* AFNetworking.framework */,
-				50B043041E7C8BA600F8A7FB /* OnePasswordExtension.framework */,
-				50B043051E7C8BA600F8A7FB /* ParticleDeviceSetupLibrary.framework */,
-				50B043061E7C8BA600F8A7FB /* ParticleSDK.framework */,
+				500638ED1F57A6DD00D09FB2 /* AFNetworking.framework */,
+				500638EE1F57A6DD00D09FB2 /* OnePasswordExtension.framework */,
+				500638EF1F57A6DD00D09FB2 /* ParticleDeviceSetupLibrary.framework */,
+				500638F01F57A6DD00D09FB2 /* ParticleSDK.framework */,
 				5014ED761CB8777900A1063E /* README.md */,
 				50A6F89A1CB4A646000024A8 /* Cartfile */,
 				50A6F86C1CAE06DD000024A8 /* ParticleSDKExampleApp */,

@@ -10,8 +10,10 @@ import UIKit
 import ParticleDeviceSetupLibrary
 import ParticleSDK
 
-class ViewController: UIViewController, SparkSetupMainControllerDelegate, SparkDeviceDelegate {
+class ViewController: UIViewController, ParticleSetupMainControllerDelegate, ParticleDeviceDelegate {
 
+    
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
@@ -26,7 +28,7 @@ class ViewController: UIViewController, SparkSetupMainControllerDelegate, SparkD
         // Dispose of any resources that can be recreated.
     }
 
-    func sparkSetupViewController(_ controller: SparkSetupMainController!, didFinishWith result: SparkSetupMainControllerResult, device: SparkDevice!) {
+    func particleSetupViewController(_ controller: ParticleSetupMainController!, didFinishWith result: ParticleSetupMainControllerResult, device: ParticleDevice!) {
         
         print("result: \(result), and device: \(device)")
         
@@ -35,12 +37,12 @@ class ViewController: UIViewController, SparkSetupMainControllerDelegate, SparkD
     @IBAction func invokeSetup(_ sender: AnyObject) {
         print("Particle Device setup lib V:\(ParticleDeviceSetupLibraryVersionNumber)\nParticle SDK V:\(ParticleSDKVersionNumber)")
         
-        // lines required for invoking the Spark Setup wizard
-        if let vc = SparkSetupMainController()
+        // lines required for invoking the Particle Setup wizard
+        if let vc = ParticleSetupMainController()
         {
             
             // check organization setup mode
-            let c = SparkSetupCustomization.sharedInstance()
+            let c = ParticleSetupCustomization.sharedInstance()
             c?.allowSkipAuthentication = true
             
             vc.delegate = self
@@ -54,7 +56,7 @@ class ViewController: UIViewController, SparkSetupMainControllerDelegate, SparkD
         self.testCloudSDK()
     }
     
-    func sparkDevice(_ device: SparkDevice, didReceive event: SparkDeviceSystemEvent) {
+    func particleDevice(_ device: ParticleDevice, didReceive event: ParticleDeviceSystemEvent) {
         print("Device "+device.name!+" received system event id "+String(event.rawValue))
     }
     
@@ -63,26 +65,31 @@ class ViewController: UIViewController, SparkSetupMainControllerDelegate, SparkD
         let loginGroup : DispatchGroup = DispatchGroup()
         let deviceGroup : DispatchGroup = DispatchGroup()
         let functionName = "testFunc"
-        let variableName = "testVar"
-        var myPhoton : SparkDevice? = nil
+//        let variableName = "testVar"
+        var myPhoton : ParticleDevice? = nil
         var myEventId : Any?
 
         
         // CHANGE THESE CONSANTS TO WHAT YOU NEED:
+//        let deviceName = "hobbit_wombat"
+//        let username = "testuser@particle.io"
+//        let password = "testpass"
         let deviceName = "hobbit_wombat"
-        let username = "testuser@particle.io"
-        let password = "testpass"
+        let username = "ido@spark.io"
+        let password = "test123"
 
         
         DispatchQueue(label: "example1", qos: DispatchQoS.default).async {
             // logging in
-            loginGroup.enter();
-            deviceGroup.enter();
-            if SparkCloud.sharedInstance().isAuthenticated {
+//            loginGroup.enter();
+//            deviceGroup.enter();
+//            if SparkCloud.sharedInstance().isAuthenticated {
                 print("logging out of old session")
-                SparkCloud.sharedInstance().logout()
-            }
+                ParticleCloud.sharedInstance().logout()
+//                loginGroup.leave()
+//            }
             
+            /*
             SparkCloud.sharedInstance().login(withUser: username, password: password, completion: { (error : Error?) in  // or possibly: .injectSessionAccessToken("ec05695c1b224a262f1a1e92d5fc2de912c467a1")
                 if let _ = error {
                     print("Wrong credentials or no internet connectivity, please try again")
@@ -93,8 +100,10 @@ class ViewController: UIViewController, SparkSetupMainControllerDelegate, SparkD
                     loginGroup.leave()
                 }
             })
+            */
         }
         
+        /*
         DispatchQueue(label: "example1", qos: DispatchQoS.default).async {
             // logging in
             _ = loginGroup.wait(timeout: DispatchTime.distantFuture)
@@ -127,26 +136,33 @@ class ViewController: UIViewController, SparkSetupMainControllerDelegate, SparkD
                 }
             }
         }
-        
+        */
         
         DispatchQueue(label: "example1", qos: DispatchQoS.default).async {
             // logging in
-            _ = deviceGroup.wait(timeout: DispatchTime.distantFuture)
-            deviceGroup.enter();
+//            _ = deviceGroup.wait(timeout: DispatchTime.distantFuture)
+//            deviceGroup.enter();
             
             print("subscribing to event...");
-            var gotFirstEvent : Bool = false
-            myEventId = myPhoton!.subscribeToEvents(withPrefix: "some-test", handler: { (event: SparkEvent?, error:Error?) -> Void in
-                if (!gotFirstEvent) {
-                    print("Got first event: "+event!.event)
-                    gotFirstEvent = true
-                    deviceGroup.leave()
-                } else {
-                    print("Got event: "+event!.event)
+//            var gotFirstEvent : Bool = false
+            myEventId = ParticleCloud.sharedInstance().subscribeToDeviceEvents(withPrefix: nil, deviceID: "3b0027001747353236343033", handler: { (event: ParticleEvent?, error:Error?) in
+//            myEventId = myPhoton!.subscribeToEvents(withPrefix: nil, handler: { (event: SparkEvent?, error:Error?) -> Void in
+//                if (!gotFirstEvent) {
+                print("Got called")
+                if let e = error {
+                    print(e)
+                } else if let ev = event {
+                    print("Got event: "+ev.event)
                 }
+//                    gotFirstEvent = true
+//                    deviceGroup.leave()
+//                } else {
+//                    print("Got event: "+event!.event)
+//                }
             });
         }
         
+        /*
         
         // calling a function
         DispatchQueue(label: "example1", qos: DispatchQoS.default).async {
@@ -206,7 +222,7 @@ class ViewController: UIViewController, SparkSetupMainControllerDelegate, SparkD
         // logout
         DispatchQueue(label: "example1", qos: DispatchQoS.default).async {
             // logging in
-            _ = deviceGroup.wait(timeout: DispatchTime.distantFuture) // 5
+            deviceGroup.wait(timeout: DispatchTime.distantFuture) // 5
             
             if let eId = myEventId {
                 myPhoton!.unsubscribeFromEvent(withID: eId)
@@ -215,6 +231,7 @@ class ViewController: UIViewController, SparkSetupMainControllerDelegate, SparkD
             
             print("logged out")
         }
+        */
         
     }
 }

@@ -1,3 +1,4 @@
 github "AFNetworking/AFNetworking" "3.1.0"
-github "spark/spark-sdk-ios" "0.6.0"
-github "spark/spark-setup-ios" "test_cart4"
+github "AgileBits/onepassword-extension" "04f146abd3bd5e6f7ba8b18b916c55f3b3c85aed"
+github "spark/particle-sdk-ios" "0.7.0"
+github "spark/particle-setup-ios" "0.8.0"
