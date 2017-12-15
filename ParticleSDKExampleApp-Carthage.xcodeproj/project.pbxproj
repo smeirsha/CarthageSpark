@@ -95,6 +95,7 @@
 				50A6F89A1CB4A646000024A8 /* Cartfile */,
 				50A6F86C1CAE06DD000024A8 /* ParticleSDKExampleApp */,
 				50A6F86B1CAE06DD000024A8 /* Products */,
+				9E3B1CAB1FE39D8D000B958B /* Recovered References */,
 			);
 			sourceTree = "<group>";
 		};
@@ -118,6 +119,17 @@
 				50A6F8791CAE06DE000024A8 /* Info.plist */,
 			);
 			path = ParticleSDKExampleApp;
+			sourceTree = "<group>";
+		};
+		9E3B1CAB1FE39D8D000B958B /* Recovered References */ = {
+			isa = PBXGroup;
+			children = (
+				509749C81D42E3CA00C5DF0B /* AFNetworking.framework */,
+				509749C71D42E3CA00C5DF0B /* OnePasswordExtension.framework */,
+				509749C51D42E3CA00C5DF0B /* ParticleDeviceSetupLibrary.framework */,
+				509749C61D42E3CA00C5DF0B /* ParticleSDK.framework */,
+			);
+			name = "Recovered References";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -153,6 +165,7 @@
 				TargetAttributes = {
 					50A6F8691CAE06DD000024A8 = {
 						CreatedOnToolsVersion = 7.2.1;
+						DevelopmentTeam = 5Z97G9NZQ6;
 						LastSwiftMigration = 0820;
 					};
 				};
@@ -315,13 +328,14 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				DEVELOPMENT_TEAM = 5Z97G9NZQ6;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/Carthage/Build/iOS",
 				);
 				INFOPLIST_FILE = ParticleSDKExampleApp/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = "io.particle.ParticleSDKExampleApp-carthage";
+				PRODUCT_BUNDLE_IDENTIFIER = "meirav.io.particle.ParticleSDKExampleApp-carthage";
 				PRODUCT_NAME = "ParticleSDKExampleApp-Carthage";
 				SWIFT_VERSION = 3.0;
 				WARNING_CFLAGS = "";
@@ -332,13 +346,14 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				DEVELOPMENT_TEAM = 5Z97G9NZQ6;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/Carthage/Build/iOS",
 				);
 				INFOPLIST_FILE = ParticleSDKExampleApp/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = "io.particle.ParticleSDKExampleApp-carthage";
+				PRODUCT_BUNDLE_IDENTIFIER = "meirav.io.particle.ParticleSDKExampleApp-carthage";
 				PRODUCT_NAME = "ParticleSDKExampleApp-Carthage";
 				SWIFT_VERSION = 3.0;
 				WARNING_CFLAGS = "";
